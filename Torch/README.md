@@ -14,7 +14,7 @@ If you are running Ubuntu, you can install proprietary NVIDIA drivers [from the 
 
 Firstly ensure that you have a supported NVIDIA graphics card with the appropriate drivers and CUDA libraries installed.
 
-The update script checks for the latest commit and saves that into the final Dockerfile. This helps with knowing what version the current Docker container was built with. To build the image using the following command:
+Build the image using the following command:
 
 ```sh
 ./update.sh && docker build -t gforge/nnx-torch nnx-torch

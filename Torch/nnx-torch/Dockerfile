@@ -1,4 +1,4 @@
-FROM nvidia/cuda:cudnn
+FROM nvidia/cuda:cudnn-devel
 MAINTAINER Max Gordon <max@gforge.se>
 
 # Install Python, Jupyter and build tools
@@ -8,12 +8,12 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     ipython3 \
     build-essential \
-    git 
+    git
 RUN easy_install3 pip \
  && pip install 'notebook>=4.1.0' jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
-ARG TORCH_DISTRO_COMMIT=660bdfea60df0d7c6db690c13ac0c23f13fcb3e7
+ARG TORCH_DISTRO_COMMIT=47cdd1cc8bcfac84031787fc46668c18bb1c2aa9
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && cd /root/torch
 
 RUN apt-get install -y \
@@ -32,8 +32,8 @@ ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/
     PATH=/root/torch/install/bin:$PATH \
     LD_LIBRARY_PATH=/root/torch/install/lib:$LD_LIBRARY_PATH \
     DYLD_LIBRARY_PATH=/root/torch/install/lib:$DYLD_LIBRARY_PATH \
-    LUA_CPATH='/root/.luarocks/lib/lua/5.1/?.so;/root/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so' 
-    
+    LUA_CPATH='/root/.luarocks/lib/lua/5.1/?.so;/root/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
+
 # Install Moses for utilities
 RUN luarocks install moses
 
@@ -53,33 +53,22 @@ RUN luarocks install luaposix
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Set working dir
-VOLUME /root/notebook
-WORKDIR /root/notebook
-
-# Jupyter config
-RUN jupyter notebook --generate-config \
- && echo "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
-    >> ~/.jupyter/jupyter_notebook_config.py
-
-# Expose Jupyter port
-EXPOSE 8888
-
-CMD ["jupyter", "notebook", "--no-browser", "--ip=0.0.0.0"]
-
 ##############################################
 # Specific libraries used in the nnx-project #
 ##############################################
-RUN luarocks install findCUDA \
- && luarocks install nn \
- && luarocks install cutorch \
- && luarocks install cunn \
- && luarocks install ccn2 \
- && luarocks install cudnn
+RUN luarocks install findCUDA
+RUN luarocks install nn
+RUN luarocks install cutorch
+RUN luarocks install cunn
+RUN luarocks install ccn2
+RUN luarocks install cudnn
 
 # My own custom ignore function
 RUN luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/criterion_ignore-0.1-1.rockspec
- 
+
+# My and Alex' dataframe
+RUN luarocks install https://raw.githubusercontent.com/AlexMili/torch-dataframe/master/rocks/torch-dataframe-scm-1.rockspec
+
 # Install loadcaffe dependencies
 RUN apt-get update && apt-get install -y \
   libprotobuf-dev \
@@ -127,3 +116,26 @@ RUN luarocks install https://raw.githubusercontent.com/bshillingford/nnquery/mas
 
 # Install rnn
 RUN luarocks install rnn
+
+# Install iTorch
+RUN luarocks install itorch
+
+# Install csvigo
+RUN luarocks install csvigo
+RUN luarocks install luafilesystem
+RUN luarocks install argcheck
+
+# Set working dir
+VOLUME /root/notebook
+WORKDIR /root/notebook
+
+# Jupyter config
+RUN jupyter notebook --generate-config \
+ && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
+    >> ~/.jupyter/jupyter_notebook_config.py
+
+# Expose Jupyter port
+EXPOSE 8888
+
+COPY resources /root
+CMD ["/root/run_jupyter.sh"]
