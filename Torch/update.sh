@@ -9,6 +9,6 @@ shell_format='$BASE:$LATEST_TORCH_DISTRO_COMMIT'
 
 dest="nnx-torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
-export BASE=nvidia/cuda:cudnn-devel
+export BASE=nvidia/cuda:7.5-cudnn4-devel
 
 envsubst $shell_format < $template > $dest
