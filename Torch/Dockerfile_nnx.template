@@ -1,4 +1,4 @@
-FROM gforge/nvidia-torch
+FROM gforge/base-torch
 MAINTAINER Max Gordon <max@gforge.se>
 
 # Install Moses for utilities
