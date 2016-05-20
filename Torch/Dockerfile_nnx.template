@@ -8,10 +8,10 @@ MAINTAINER Max Gordon <max@gforge.se>
 RUN luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/criterion_ignore-0.1-1.rockspec
 
 # Install prereq. for torch-dataframe
-RUN luarocks install csvigo &&
-  luarocks install luafilesystem &&
-  luarocks install argcheck &&
-  luarocks install busted
+RUN luarocks install csvigo
+RUN luarocks install luafilesystem
+RUN luarocks install argcheck
+RUN luarocks install busted
 
 # My and Alex' torch-dataframe
 RUN cd /root &&
