@@ -48,15 +48,8 @@ RUN luarocks install autograd
 RUN luarocks install rnn
 RUN luarocks install unsup
 
-# Install dataset
-RUN luarocks install dataset
-
-
 # Install distlearn
 RUN luarocks install distlearn
-
-# Install classic
-RUN luarocks install classic
 
 # Install torchx
 RUN luarocks install torchx
