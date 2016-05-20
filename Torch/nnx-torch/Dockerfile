@@ -1,6 +1,16 @@
 FROM gforge/base-torch
 MAINTAINER Max Gordon <max@gforge.se>
 
+# - Libraries that are probably nice to have
+# Install parallel
+RUN luarocks install optim
+
+# Install parallel
+RUN luarocks install parallel
+
+# Install iTorch
+RUN luarocks install itorch
+
 ##############################################
 # Specific libraries used in the nnx-project #
 ##############################################
@@ -14,11 +24,14 @@ RUN luarocks install argcheck
 RUN luarocks install busted
 
 # My and Alex' torch-dataframe
-RUN cd /root &&
-   git clone https://github.com/AlexMili/torch-dataframe.git && 
-   cd torch-dataframe &&
-   git checkout develop && 
-   luarocks make
+RUN cd /root && \
+   git clone https://github.com/AlexMili/torch-dataframe.git && \
+   cd /root/torch-dataframe && \
+   git checkout develop
+   
+RUN cd /root/torch-dataframe && \ 
+    luarocks make ./rocks/torch-dataframe-scm-1.rockspec
+
 # Change to this for stable release: RUN git clone  install https://raw.githubusercontent.com/AlexMili/torch-dataframe/master/rocks/torch-dataframe-scm-1.rockspec
 
 # Possibly useful for loadcaffe
@@ -30,16 +43,6 @@ RUN apt-get update && apt-get install -y \
   protobuf-compiler
 # Install loadcaffe
 RUN luarocks install loadcaffe
-
-# - Libraries that are probably nice to have
-# Install parallel
-RUN luarocks install optim
-
-# Install parallel
-RUN luarocks install parallel
-
-# Install iTorch
-RUN luarocks install itorch
 
 # Set working dir
 VOLUME /root/notebook
