@@ -37,4 +37,38 @@ ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Add findCUDA so that we don't get all those THC errors
+RUN luarocks install findCUDA
+
+# Install Moses for utilities for better array handling
+RUN luarocks install moses
+
+# Install torch-autograd, rnn and unsup
+RUN luarocks install autograd
+RUN luarocks install rnn
+RUN luarocks install unsup
+
+# Install dataset
+RUN luarocks install dataset
+
+
+# Install distlearn
+RUN luarocks install distlearn
+
+# Install classic
+RUN luarocks install classic
+
+# Install torchx
+RUN luarocks install torchx
+
+# Install dpnn
+RUN luarocks install dpnn
+
+# Install nninit
+RUN luarocks install nninit
+
+# Install nnquery
+RUN apt-get install -y graphviz
+RUN luarocks install https://raw.githubusercontent.com/bshillingford/nnquery/master/rocks/nnquery-scm-1.rockspec
+
 CMD ["/bin/bash"]

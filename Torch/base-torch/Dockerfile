@@ -13,7 +13,7 @@ RUN easy_install3 pip \
  && pip install 'notebook>=4.1.0' jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
-ARG TORCH_DISTRO_COMMIT=ba34004a7a48806bf4a6e88ecfc5fbada5efe636
+ARG TORCH_DISTRO_COMMIT=2f020918f561c108bb5b95e561b63dbbe635ec62
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && cd /root/torch
 
 RUN apt-get install -y \
@@ -36,5 +36,39 @@ ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Add findCUDA so that we don't get all those THC errors
+RUN luarocks install findCUDA
+
+# Install Moses for utilities for better array handling
+RUN luarocks install moses
+
+# Install torch-autograd, rnn and unsup
+RUN luarocks install autograd
+RUN luarocks install rnn
+RUN luarocks install unsup
+
+# Install dataset
+RUN luarocks install dataset
+
+
+# Install distlearn
+RUN luarocks install distlearn
+
+# Install classic
+RUN luarocks install classic
+
+# Install torchx
+RUN luarocks install torchx
+
+# Install dpnn
+RUN luarocks install dpnn
+
+# Install nninit
+RUN luarocks install nninit
+
+# Install nnquery
+RUN apt-get install -y graphviz
+RUN luarocks install https://raw.githubusercontent.com/bshillingford/nnquery/master/rocks/nnquery-scm-1.rockspec
 
 CMD ["/bin/bash"]
