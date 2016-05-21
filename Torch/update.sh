@@ -14,11 +14,25 @@ export BASE=nvidia/cuda:7.5-cudnn4-devel
 
 envsubst $shell_format < $template > $dest
 
+###############
+# Next Docker #
+###############
+echo "Create the extend-torch Dockerfile"
+dest="extend-torch/Dockerfile"
+mkdir -p "$(dirname "$dest")"
+
+export BASE=gforge/base-torch
+template="Dockerfile_nnx.template"
+
+envsubst $shell_format < $template > $dest
+
+###############
+# Next Docker #
+###############
 echo "Create the nnx-specific Dockerfile"
 dest="nnx-torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
-export BASE=gforge/nnx-base
+export BASE=gforge/extend-torch
 template="Dockerfile_nnx.template"
 envsubst $shell_format < $template > $dest
-

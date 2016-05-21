@@ -1,4 +1,4 @@
-FROM $BASE
+FROM gforge/base-torch
 MAINTAINER Max Gordon <max@gforge.se>
 
 # - Libraries that are probably nice to have

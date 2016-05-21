@@ -34,31 +34,4 @@ ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/
     DYLD_LIBRARY_PATH=/root/torch/install/lib:$DYLD_LIBRARY_PATH \
     LUA_CPATH='/root/.luarocks/lib/lua/5.1/?.so;/root/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
 
-# Clean up
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Add findCUDA so that we don't get all those THC errors
-RUN luarocks install findCUDA
-
-# Install Moses for utilities for better array handling
-RUN luarocks install moses
-
-# Install torch-autograd, rnn and unsup
-RUN luarocks install autograd
-RUN luarocks install rnn
-RUN luarocks install unsup
-
-# Install distlearn
-RUN luarocks install distlearn
-
-# Install torchx
-RUN luarocks install torchx
-
-# Install dpnn
-RUN luarocks install dpnn
-
-# Install nninit
-RUN luarocks install nninit
-
 CMD ["/bin/bash"]
-
