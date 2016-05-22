@@ -1,4 +1,4 @@
-FROM gforge/extend-torch
+FROM gforge/extendo-torch
 MAINTAINER Max Gordon <max@gforge.se>
 
 # - Libraries that are probably nice to have

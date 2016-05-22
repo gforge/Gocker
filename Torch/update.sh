@@ -22,7 +22,7 @@ dest="extend-torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
 export BASE=gforge/base-torch
-template="Dockerfile_nnx.template"
+template="Dockerfile_extend.template"
 
 envsubst $shell_format < $template > $dest
 
@@ -33,6 +33,6 @@ echo "Create the nnx-specific Dockerfile"
 dest="nnx-torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
-export BASE=gforge/extend-torch
+export BASE=gforge/extendo-torch
 template="Dockerfile_nnx.template"
 envsubst $shell_format < $template > $dest
