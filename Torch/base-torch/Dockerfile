@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git
 RUN easy_install3 pip \
- && pip install 'notebook>=4.1.0' jupyter ipywidgets
+ && pip install jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
 ARG TORCH_DISTRO_COMMIT=2f020918f561c108bb5b95e561b63dbbe635ec62
