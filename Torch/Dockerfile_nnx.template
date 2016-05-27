@@ -44,6 +44,15 @@ RUN apt-get update && apt-get install -y \
 # Install loadcaffe
 RUN luarocks install loadcaffe
 
+# Install tex converters
+RUN apt-get update && apt-get install -y \
+  pandoc \
+  texlive \
+  texlive-latex-extra \
+  texlive-latex-recommended \
+  texlive-fonts-recommended \
+  texlive-xetex
+
 # Set working dir
 VOLUME /root/notebook
 WORKDIR /root/notebook
