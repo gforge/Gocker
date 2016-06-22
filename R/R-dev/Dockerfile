@@ -3,38 +3,38 @@ MAINTAINER "Max Gordon" max@gforge.se
 
 ## Remain current
 RUN apt-get update \
-	&& apt-get upgrade -y
+  && apt-get upgrade -y
 
 RUN apt-get update \
-	&& apt-get install -y  \
-		bash-completion \
-		bison \
-		debhelper \
-		default-jdk \
-		g++ \
-		gcc \
-		gdb \
-		gfortran \
-		groff-base \
-		libblas-dev \
-		libbz2-dev \
-		libcairo2-dev \
-		libcurl4-openssl-dev \
-		libjpeg-dev \
-		liblapack-dev \
-		liblzma-dev \
-		libncurses5-dev \
-		libpango1.0-dev \
-		libpcre3-dev \
-		libpng-dev \
-		libreadline-dev \
-		libtiff5-dev \
-		libx11-dev \
-		libxt-dev \
-		mpack \
-		subversion \
-		tcl8.6-dev \
-		icedtea-netx \
+  && apt-get install -y  \
+    bash-completion \
+    bison \
+    debhelper \
+    default-jdk \
+    g++ \
+    gcc \
+    gdb \
+    gfortran \
+    groff-base \
+    libblas-dev \
+    libbz2-dev \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libjpeg-dev \
+    liblapack-dev \
+    liblzma-dev \
+    libncurses5-dev \
+    libpango1.0-dev \
+    libpcre3-dev \
+    libpng-dev \
+    libreadline-dev \
+    libtiff5-dev \
+    libx11-dev \
+    libxt-dev \
+    mpack \
+    subversion \
+    tcl8.6-dev \
+    icedtea-netx \
     libatlas-base-dev \
     libcairo2-dev \
     libgsl0-dev \
@@ -58,33 +58,33 @@ WORKDIR "/root/packages"
 
 RUN install2.r -d TRUE \
     devtools \
-		htmlTable \
-		Gmisc \
-		forestplot \
-		ggplot2 \
-		dplyr \
-		magrittr \
-		plyr \
+    htmlTable \
+    Gmisc \
+    forestplot \
+    ggplot2 \
+    dplyr \
+    magrittr \
+    plyr \
     cmprsk \
-		testthat \
-		rms \
-		sandwich \
-		Epi \
+    testthat \
+    rms \
+    sandwich \
+    Epi \
     lattice \
-		survival \
-		cluster \
-		parallel \
-		foreign \
-		nnet \
-		rpart \
-		MASS \
-		nlme \
-		rmeta \
-		Matrix
+    survival \
+    cluster \
+    parallel \
+    foreign \
+    nnet \
+    rpart \
+    MASS \
+    nlme \
+    rmeta \
+    Matrix
 
 RUN apt-get install -y \
     pandoc \
-		pandoc-citeproc
+    pandoc-citeproc
 
 # RUN install2.r -d TRUE \
 
