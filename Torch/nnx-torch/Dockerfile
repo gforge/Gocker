@@ -51,7 +51,7 @@ RUN apt-get update && apt-get install -y \
   texlive-latex-extra \
   texlive-latex-recommended \
   texlive-fonts-recommended \
-  texlive-xetex 
+  texlive-xetex
 
 # Set working dir
 VOLUME /root/notebook
