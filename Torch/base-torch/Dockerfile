@@ -1,4 +1,4 @@
-FROM nvidia/cuda:7.5-cudnn4-devel
+FROM nvidia/cuda:7.5-cudnn5-devel
 MAINTAINER Max Gordon <max@gforge.se>
 
 # Install Python, Jupyter and build tools

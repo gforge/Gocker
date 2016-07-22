@@ -1,9 +1,6 @@
 FROM $BASE
 MAINTAINER Max Gordon <max@gforge.se>
 
-# Add findCUDA so that we don't get all those THC errors
-RUN luarocks install findCUDA
-
 # Install Moses for utilities for better array handling
 RUN luarocks install moses
 
@@ -23,5 +20,8 @@ RUN luarocks install dpnn
 
 # Install nninit
 RUN luarocks install nninit
+
+# Install torchnet
+RUN luarocks install torchnet
 
 CMD ["/bin/bash"]
