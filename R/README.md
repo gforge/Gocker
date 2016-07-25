@@ -5,14 +5,14 @@ These are R Docker files that I use for testing my packages in new environments.
 For running the container all you need to do is do the following:
 
 ```
-docker run --rm -it --volume=/path/to/R-package:/root/package \
+docker run --rm -it --volume=/path/to/R-package:/root/pkg \
   gforge/r-dev
 ```
 
 Once you are in the container you just write the standard check although note that you must use **RD** and not R as the development branch is in RD:
 
-```
-RD CMD check --as-cran
+```bash
+./check_pkg.sh
 ```
 
 in order to get check the package against the latest R dev. version.

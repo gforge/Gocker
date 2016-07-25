@@ -53,9 +53,6 @@ RUN apt-get update \
     qpdf \
     ssh
 
-RUN mkdir /root/packages
-WORKDIR "/root/packages"
-
 RUN install2.r -d TRUE \
     devtools \
     htmlTable \
@@ -80,12 +77,16 @@ RUN install2.r -d TRUE \
     MASS \
     nlme \
     rmeta \
+    pxweb \
+    pander \
     Matrix
 
 RUN apt-get install -y \
     pandoc \
-    pandoc-citeproc
+    pandoc-citeproc \
+    nano
 
-# RUN install2.r -d TRUE \
+COPY resources /root
+WORKDIR "/root"
 
 CMD ["/bin/bash"]
