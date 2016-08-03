@@ -3,6 +3,13 @@
 FROM tensorflow/tensorflow
 MAINTAINER Jakub Niob
 
+#################
+# Update python #
+#################
+
+RUN apt update
+RUN apt upgrade -y
+
 ##############################################
 # Specific libraries used in the nnx-project #
 ##############################################
@@ -26,5 +33,5 @@ RUN pip install sklearn
 # Expose Jupyter port
 EXPOSE 8888
 
-# CMD ["/bin/bash"]
+COPY resources /root
 CMD ["/root/run_jupyter.sh"]
