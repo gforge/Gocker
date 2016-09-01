@@ -15,7 +15,7 @@ RUN luarocks install itorch
 # Specific libraries used in the nnx-project #
 ##############################################
 # My own custom ignore function
-RUN luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/criterion_ignore-0.1-1.rockspec
+RUN luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/rocks/criterion_ignore-0.2-1.rockspec
 
 # Install prereq. for torch-dataframe
 RUN luarocks install csvigo
@@ -24,15 +24,7 @@ RUN luarocks install argcheck
 RUN luarocks install busted
 
 # My and Alex' torch-dataframe
-RUN cd /root && \
-   git clone https://github.com/AlexMili/torch-dataframe.git && \
-   cd /root/torch-dataframe && \
-   git checkout develop
-
-RUN cd /root/torch-dataframe && \
-    luarocks make ./rocks/torch-dataframe-scm-1.rockspec
-
-# Change to this for stable release: RUN git clone  install https://raw.githubusercontent.com/AlexMili/torch-dataframe/master/rocks/torch-dataframe-scm-1.rockspec
+RUN luarocks install https://raw.githubusercontent.com/AlexMili/torch-dataframe/master/rocks/torch-dataframe-scm-1.rockspec
 
 # Possibly useful for loadcaffe
 # Skip for now: RUN luarocks install ccn2

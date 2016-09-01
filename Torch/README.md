@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/gforge/base-torch.svg)](https://microbadger.com/images/gforge/base-torch "Get your own image badge on microbadger.com")
+
 ### Torch Docker image
 
 Ubuntu 14.04 + Torch + CUDA + cuDNN
