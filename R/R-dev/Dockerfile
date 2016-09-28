@@ -79,7 +79,8 @@ RUN install2.r -d TRUE \
     rmeta \
     pxweb \
     pander \
-    Matrix
+    Matrix \
+    checkmate
 
 RUN apt-get install -y \
     pandoc \
