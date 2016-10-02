@@ -80,7 +80,9 @@ RUN install2.r -d TRUE \
     pxweb \
     pander \
     Matrix \
-    checkmate
+    checkmate \
+    lattice \
+    codetools
 
 RUN apt-get install -y \
     pandoc \
