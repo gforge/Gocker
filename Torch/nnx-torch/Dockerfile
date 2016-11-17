@@ -1,6 +1,15 @@
 FROM gforge/extend-torch
 MAINTAINER Max Gordon <max@gforge.se>
 
+# Install tex converters
+RUN apt-get update && apt-get install -y \
+  pandoc \
+  texlive \
+  texlive-latex-extra \
+  texlive-latex-recommended \
+  texlive-fonts-recommended \
+  texlive-xetex
+
 # - Libraries that are probably nice to have
 # Install parallel
 RUN luarocks install optim
@@ -36,14 +45,8 @@ RUN apt-get update && apt-get install -y \
 # Install loadcaffe
 RUN luarocks install loadcaffe
 
-# Install tex converters
-RUN apt-get update && apt-get install -y \
-  pandoc \
-  texlive \
-  texlive-latex-extra \
-  texlive-latex-recommended \
-  texlive-fonts-recommended \
-  texlive-xetex
+# torchnet addon stuff
+RUN luarocks install https://raw.githubusercontent.com/gforge/torchnet-addons/master/rocks/torchnet-addons-scm-1.rockspec
 
 # Set working dir
 VOLUME /root/notebook

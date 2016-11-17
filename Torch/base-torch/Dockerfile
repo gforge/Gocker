@@ -13,7 +13,7 @@ RUN easy_install3 pip \
  && pip install jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
-ARG TORCH_DISTRO_COMMIT=f41316ea2895fd3462375c7c92350c646b25166b
+ARG TORCH_DISTRO_COMMIT=c440b66fff270ad0b39b9191ab8dbcf7235a3bc3
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && cd /root/torch
 
 RUN apt-get install -y \
