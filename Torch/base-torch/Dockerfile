@@ -1,4 +1,4 @@
-FROM nvidia/cuda:7.5-cudnn5-devel
+FROM nvidia/cuda:8.0-cudnn5-devel
 MAINTAINER Max Gordon <max@gforge.se>
 
 # Install Python, Jupyter and build tools
@@ -13,7 +13,7 @@ RUN easy_install3 pip \
  && pip install jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
-ARG TORCH_DISTRO_COMMIT=e2db69a88a8da71b1adcd41698e619cb6609c0a9
+ARG TORCH_DISTRO_COMMIT=c9b29cf41ec714ee45b4799c2bd76e82d1b1f267
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && cd /root/torch
 
 RUN apt-get install -y \
