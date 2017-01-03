@@ -85,6 +85,10 @@ RUN install2.r -d TRUE \
     lattice \
     codetools
 
+RUN install2.r -d TRUE \
+    chron \
+    lubridate
+
 RUN apt-get install -y \
     pandoc \
     pandoc-citeproc \
