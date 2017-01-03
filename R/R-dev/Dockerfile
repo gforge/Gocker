@@ -42,6 +42,7 @@ RUN apt-get update \
     libgeos-dev \
     libssl-dev \
     libpq-dev \
+    libsqlite3-0 \
     libsqlite3-dev \
     libv8-dev \
     libxcb1-dev \
