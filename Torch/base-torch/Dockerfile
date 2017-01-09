@@ -1,6 +1,9 @@
 FROM nvidia/cuda:8.0-cudnn5-devel
 MAINTAINER Max Gordon <max@gforge.se>
 
+# This package only installs the pre-requisits for later installing torch
+# Due to dockerhub limitations it's split into these small pieces
+
 # Install Python, Jupyter and build tools
 RUN apt-get update && apt-get install -y \
     python3 \
@@ -13,7 +16,7 @@ RUN easy_install3 pip \
  && pip install jupyter ipywidgets
 
 # Run Torch7 installation scripts (dependencies only)
-ARG TORCH_DISTRO_COMMIT=c9b29cf41ec714ee45b4799c2bd76e82d1b1f267
+ARG TORCH_DISTRO_COMMIT=e21ee70861fb78aa147757b5ed64755f30391637
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && cd /root/torch
 
 RUN apt-get install -y \
@@ -22,16 +25,5 @@ RUN apt-get install -y \
 RUN cd /root/torch \
  && git checkout "$TORCH_DISTRO_COMMIT" \
  && bash install-deps
-
-# Run Torch7 installation scripts
-RUN cd /root/torch \
- && ./install.sh
-
-# Export environment variables manually
-ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/?/init.lua;/root/torch/install/share/lua/5.1/?.lua;/root/torch/install/share/lua/5.1/?/init.lua;./?.lua;/root/torch/install/share/luajit-2.1.0-alpha/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua' \
-    PATH=/root/torch/install/bin:$PATH \
-    LD_LIBRARY_PATH=/root/torch/install/lib:$LD_LIBRARY_PATH \
-    DYLD_LIBRARY_PATH=/root/torch/install/lib:$DYLD_LIBRARY_PATH \
-    LUA_CPATH='/root/.luarocks/lib/lua/5.1/?.so;/root/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
 
 CMD ["/bin/bash"]
