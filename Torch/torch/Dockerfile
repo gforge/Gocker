@@ -1,27 +1,15 @@
 FROM gforge/nvidia-torch-base
 MAINTAINER Max Gordon <max@gforge.se>
 
-# Install Moses for utilities for better array handling
-RUN luarocks install moses
+# Run Torch7 installation scripts
+RUN cd /root/torch \
+ && ./install.sh
 
-# Install torch-autograd, rnn and unsup
-RUN luarocks install autograd
-RUN luarocks install rnn
-RUN luarocks install unsup
-
-# Install distlearn
-RUN luarocks install distlearn
-
-# Install torchx
-RUN luarocks install torchx
-
-# Install dpnn
-RUN luarocks install dpnn
-
-# Install nninit
-RUN luarocks install nninit
-
-# Install torchnet
-RUN luarocks install torchnet
+# Export environment variables manually
+ENV LUA_PATH='/root/.luarocks/share/lua/5.1/?.lua;/root/.luarocks/share/lua/5.1/?/init.lua;/root/torch/install/share/lua/5.1/?.lua;/root/torch/install/share/lua/5.1/?/init.lua;./?.lua;/root/torch/install/share/luajit-2.1.0-alpha/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua' \
+    PATH=/root/torch/install/bin:$PATH \
+    LD_LIBRARY_PATH=/root/torch/install/lib:$LD_LIBRARY_PATH \
+    DYLD_LIBRARY_PATH=/root/torch/install/lib:$DYLD_LIBRARY_PATH \
+    LUA_CPATH='/root/.luarocks/lib/lua/5.1/?.so;/root/torch/install/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so'
 
 CMD ["/bin/bash"]

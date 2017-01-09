@@ -26,7 +26,7 @@ dest="torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
 export BASE=gforge/nvidia-torch-base
-template="Dockerfile_extend.template"
+template="Dockerfile_torch.template"
 
 envsubst $shell_format < $template > $dest
 
