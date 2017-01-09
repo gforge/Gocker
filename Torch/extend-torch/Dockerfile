@@ -9,9 +9,6 @@ RUN luarocks install autograd
 RUN luarocks install rnn
 RUN luarocks install unsup
 
-# Install distlearn
-RUN luarocks install distlearn
-
 # Install torchx
 RUN luarocks install torchx
 
