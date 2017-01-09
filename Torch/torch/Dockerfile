@@ -1,4 +1,4 @@
-FROM gforge/base
+FROM gforge/nvidia-torch-base
 MAINTAINER Max Gordon <max@gforge.se>
 
 # Install Moses for utilities for better array handling

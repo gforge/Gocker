@@ -25,7 +25,7 @@ echo "Create the extend-torch Dockerfile"
 dest="torch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
-export BASE=gforge/base
+export BASE=gforge/nvidia-torch-base
 template="Dockerfile_extend.template"
 
 envsubst $shell_format < $template > $dest
