@@ -27,7 +27,7 @@ if [ $build_depth -ge 2 ]; then
   echo -e "\e[93m*******************************\e[0m"
   echo -e "\e[93m*\e[0m Building ext. torch docker \e[93m*\e[0m"
   echo -e "\e[93m*******************************\e[0m"
-  docker build -t gforge/extend-toch extend-torch/
+  docker build -t gforge/extend-torch extend-torch/
 fi
 
 if [ $build_depth -ge 1 ]; then
