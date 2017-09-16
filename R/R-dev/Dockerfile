@@ -5,8 +5,9 @@ MAINTAINER "Max Gordon" max@gforge.se
 RUN apt-get update \
   && apt-get upgrade -y
 
-RUN apt-get update \
-  && apt-get install -y  \
+RUN apt-get update
+
+RUN apt-get install -y  \
     bash-completion \
     bison \
     debhelper \
@@ -16,7 +17,6 @@ RUN apt-get update \
     gdb \
     gfortran \
     groff-base \
-    libblas-dev \
     libbz2-dev \
     libcairo2-dev \
     libcurl4-openssl-dev \
@@ -35,7 +35,6 @@ RUN apt-get update \
     subversion \
     tcl8.6-dev \
     icedtea-netx \
-    libatlas-base-dev \
     libcairo2-dev \
     libgsl0-dev \
     libgdal-dev \
@@ -52,7 +51,20 @@ RUN apt-get update \
     libxt-dev \
     netcdf-bin \
     qpdf \
+    libicu-dev \
     ssh
+
+# The blas & atlas libraries seem 2 be problematic (reduced to libblas)
+RUN apt-get install \
+    libblas-dev
+
+# TODO: figure out how install packages specifically to RD
+# RUN cp /usr/local/bin/install2.r /usr/local/bin/install2.rd
+# RUN cp /usr/local/bin/install.r /usr/local/bin/install.rd
+# RUN sed -i "1s/r$/RDscript/" /usr/local/bin/install2.rd
+# RUN sed -i "s/install2.r/install2.rd/" /usr/local/bin/install2.rd
+# RUN sed -i "1s/r$/RDscript/" /usr/local/bin/install.rd
+# RUN sed -i "s/install.r/install.rd/" /usr/local/bin/install.rd
 
 RUN install2.r -d TRUE \
     devtools \
