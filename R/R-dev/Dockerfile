@@ -67,6 +67,10 @@ RUN apt-get install \
 # RUN sed -i "s/install.r/install.rd/" /usr/local/bin/install.rd
 
 RUN install2.r -d TRUE \
+    stringr \
+    lattice \
+    survival \
+    Hmisc \
     devtools \
     htmlTable \
     Gmisc \
