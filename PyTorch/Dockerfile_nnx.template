@@ -1,0 +1,26 @@
+FROM $BASE
+MAINTAINER Max Gordon <max@gforge.se>
+
+# Install tex converters
+RUN apt-get update && apt-get install -y \
+  pandoc \
+  texlive \
+  texlive-latex-extra \
+  texlive-latex-recommended \
+  texlive-fonts-recommended \
+  texlive-xetex
+
+# Set working dir
+VOLUME /root/notebook
+WORKDIR /root/notebook
+
+# Jupyter config
+RUN jupyter notebook --generate-config \
+ && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
+    >> ~/.jupyter/jupyter_notebook_config.py
+
+# Expose Jupyter port
+EXPOSE 8888
+
+COPY resources /root
+CMD ["/root/run_jupyter.sh"]
