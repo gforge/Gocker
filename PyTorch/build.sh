@@ -13,12 +13,12 @@ if [ $build_depth -ge 2 ]; then
   echo -e "\e[93m*******************************\e[0m"
   echo -e "\e[93m*\e[0m Building base nvidia docker \e[93m*\e[0m"
   echo -e "\e[93m*******************************\e[0m"
-  nvidia-docker build -t gforge/base-pytorch base-pytorch/
+  sudo nvidia-docker build -t gforge/base-pytorch base-pytorch/
 fi
 
 if [ $build_depth -ge 1 ]; then
   echo -e "\e[93m*******************************\e[0m"
   echo -e "\e[93m*\e[0m Building nnx pytorch docker \e[93m*\e[0m"
   echo -e "\e[93m*******************************\e[0m"
-  nvidia-docker build -t gforge/nnx-pytorch nnx-pytorch/
+  sudo nvidia-docker build -t gforge/nnx-pytorch nnx-pytorch/
 fi
