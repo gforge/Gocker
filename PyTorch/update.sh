@@ -22,6 +22,6 @@ echo "Create the nnx-specific Dockerfile"
 dest="nnx-pytorch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
 
-export BASE=gforge/nvidia-pytorch
+export BASE=gforge/base-pytorch
 template="Dockerfile_nnx.template"
 envsubst $shell_format < $template > $dest

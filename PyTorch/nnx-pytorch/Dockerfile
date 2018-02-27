@@ -1,18 +1,11 @@
-FROM gforge/nvidia-pytorch
+FROM gforge/base-pytorch
 MAINTAINER Max Gordon <max@gforge.se>
 
-# Install tex converters
-RUN apt-get update && apt-get install -y \
-  pandoc \
-  texlive \
-  texlive-latex-extra \
-  texlive-latex-recommended \
-  texlive-fonts-recommended \
-  texlive-xetex
+RUN conda update conda
 
-# Set working dir
-VOLUME /root/notebook
-WORKDIR /root/notebook
+RUN conda install -y \
+   pandas \
+   opencv
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
@@ -21,6 +14,10 @@ RUN jupyter notebook --generate-config \
 
 # Expose Jupyter port
 EXPOSE 8888
+
+# Set working dir
+VOLUME /root/notebook
+WORKDIR /root/notebook
 
 COPY resources /root
 CMD ["/root/run_jupyter.sh"]
