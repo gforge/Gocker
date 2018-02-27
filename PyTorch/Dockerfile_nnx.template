@@ -19,5 +19,13 @@ EXPOSE 8888
 VOLUME /root/notebook
 WORKDIR /root/notebook
 
+RUN mkdir /models
+# Place to save the models using `torch.utils.model_zoo`
+RUN mkdir /models/zoo
+ENV TORCH_MODEL_ZOO /models/zoo
+
+# Where to mount the data
+RUN mkdir /data
+
 COPY resources /root
 CMD ["/root/run_jupyter.sh"]

@@ -24,7 +24,22 @@ You will also need to install `nvidia-docker`, which we will use to start the co
 
 #### Usage
 
-##### iTorch notebook
+##### Run as bash script
+
+```sh
+NV_GPU=0 nvidia-docker run --rm -it \
+  --volume=/path/to/log:/data/log \
+  --volume=/path/to/imagenet_path:/data/imagenet:ro \
+  --volume=/path/to/xray_path:/data/xray:ro \
+  --volume=/path/to/pretrained_models:/models/pretrained \
+  --volume=/path/to/model_zoo:/models/zoo \
+  --volume=/path/to/code:/root/code:ro \
+  gforge/nnx-pytorch bash
+```
+
+Replace all the /path/to/... with the real paths and then
+
+##### Run as notebook
 
 ```sh
 NV_GPU=0 nvidia-docker run --rm -it \
@@ -32,6 +47,7 @@ NV_GPU=0 nvidia-docker run --rm -it \
   --env=JUPYTER_PASSWORD=my_password --publish=8888:8888 gforge/nnx-pytorch
 ```
 Replace `/path/to/notebook` with a directory on the host machine that you would like to store your work in.
+Also add any additional volumes required for the script - e.g. the data folders
 
 Point your web browser to [localhost:8888](http://localhost:8888) to start using the Jupyter notebook.
 
