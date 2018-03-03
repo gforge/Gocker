@@ -28,12 +28,16 @@ You will also need to install `nvidia-docker`, which we will use to start the co
 
 ```sh
 NV_GPU=0 nvidia-docker run --rm -it \
-  --volume=/path/to/log:/data/log \
-  --volume=/path/to/imagenet_path:/data/imagenet:ro \
-  --volume=/path/to/xray_path:/data/xray:ro \
-  --volume=/path/to/pretrained_models:/models/pretrained \
-  --volume=/path/to/model_zoo:/models/zoo \
-  --volume=/path/to/code:/root/code:ro \
+  -v "/path/to/code":/root/code:ro \
+  -v "/path/to/log":/data/log \
+  -v "/path/to/imagenet_path":/data/imagenet:ro \
+  -v "/path/to/xray_path":/data/xrays:ro \
+  -v "/path/to/other":/data/other:ro \
+  -v "/path/to/annoations":/data/annotations:ro \
+  -v "/path/to/pretrained_models":/models/pretrained \
+  -v "/path/to/model_zoo":/models/zoo \
+  --env=JUPYTER_PASSWORD="Some password in case we use jupyter" \
+  --publish=8888:8888 \
   gforge/nnx-pytorch bash
 ```
 
@@ -43,7 +47,8 @@ Replace all the /path/to/... with the real paths and then
 
 ```sh
 NV_GPU=0 nvidia-docker run --rm -it \
-  --volume=/path/to/notebook:/root/notebook \
+  -v "/path/to/notebook":/root/notebook \
+  ... all above
   --env=JUPYTER_PASSWORD=my_password --publish=8888:8888 gforge/nnx-pytorch
 ```
 Replace `/path/to/notebook` with a directory on the host machine that you would like to store your work in.

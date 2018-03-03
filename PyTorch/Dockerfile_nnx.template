@@ -1,11 +1,16 @@
 FROM $BASE
 MAINTAINER Max Gordon <max@gforge.se>
 
-RUN conda update conda
+RUN apt-get update
+RUN apt-get install -y libgl1-mesa-glx
 
+RUN conda update conda
 RUN conda install -y \
    pandas \
-   opencv
+   opencv \
+   shapely \
+   scikit-learn \
+   matplotlib
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
@@ -15,9 +20,8 @@ RUN jupyter notebook --generate-config \
 # Expose Jupyter port
 EXPOSE 8888
 
-# Set working dir
-VOLUME /root/notebook
-WORKDIR /root/notebook
+VOLUME /root
+WORKDIR /root
 
 RUN mkdir /models
 # Place to save the models using `torch.utils.model_zoo`
@@ -28,4 +32,8 @@ ENV TORCH_MODEL_ZOO /models/zoo
 RUN mkdir /data
 
 COPY resources /root
-CMD ["/root/run_jupyter.sh"]
+# Change to for jupyter CMD ["/root/run_jupyter.sh"]
+
+CMD ["/bin/bash"]
+#  python code/main.py -profile docker -datasets xray_full
+
