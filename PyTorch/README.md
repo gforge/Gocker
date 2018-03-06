@@ -27,7 +27,7 @@ You will also need to install `nvidia-docker`, which we will use to start the co
 ##### Run as bash script
 
 ```sh
-NV_GPU=0 nvidia-docker run --rm -it \
+NV_GPU=0 nvidia-docker run --rm -it --ipc=host \
   -v "/path/to/code":/root/code:ro \
   -v "/path/to/log":/data/log \
   -v "/path/to/imagenet_path":/data/imagenet:ro \
@@ -41,15 +41,17 @@ NV_GPU=0 nvidia-docker run --rm -it \
   gforge/nnx-pytorch bash
 ```
 
-Replace all the /path/to/... with the real paths and then
+Replace all the /path/to/... with the real paths and then. Not that in order to increase shared memory size either use --ipc=host or --shm-size options.
 
 ##### Run as notebook
 
 ```sh
-NV_GPU=0 nvidia-docker run --rm -it \
+NV_GPU=0 nvidia-docker run --rm -it --ipc=host \
   -v "/path/to/notebook":/root/notebook \
   ... all above
-  --env=JUPYTER_PASSWORD=my_password --publish=8888:8888 gforge/nnx-pytorch
+  --env=JUPYTER_PASSWORD=my_password \
+  --publish=8888:8888 \
+  gforge/nnx-pytorch
 ```
 Replace `/path/to/notebook` with a directory on the host machine that you would like to store your work in.
 Also add any additional volumes required for the script - e.g. the data folders
