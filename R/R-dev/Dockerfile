@@ -52,65 +52,36 @@ RUN apt-get install -y  \
     netcdf-bin \
     qpdf \
     libicu-dev \
-    ssh
-
-# The blas & atlas libraries seem 2 be problematic (reduced to libblas)
-RUN apt-get install \
-    libblas-dev
-
-# TODO: figure out how install packages specifically to RD
-# RUN cp /usr/local/bin/install2.r /usr/local/bin/install2.rd
-# RUN cp /usr/local/bin/install.r /usr/local/bin/install.rd
-# RUN sed -i "1s/r$/RDscript/" /usr/local/bin/install2.rd
-# RUN sed -i "s/install2.r/install2.rd/" /usr/local/bin/install2.rd
-# RUN sed -i "1s/r$/RDscript/" /usr/local/bin/install.rd
-# RUN sed -i "s/install.r/install.rd/" /usr/local/bin/install.rd
-
-RUN install2.r -d TRUE \
-    stringr \
-    lattice \
-    survival \
-    Hmisc \
-    devtools \
-    htmlTable \
-    Gmisc \
-    forestplot \
-    ggplot2 \
-    dplyr \
-    magrittr \
-    plyr \
-    cmprsk \
-    testthat \
-    rms \
-    sandwich \
-    Epi \
-    lattice \
-    survival \
-    cluster \
-    parallel \
-    foreign \
-    nnet \
-    rpart \
-    MASS \
-    nlme \
-    rmeta \
-    pxweb \
-    pander \
-    Matrix \
-    checkmate \
-    lattice \
-    codetools
-
-RUN install2.r -d TRUE \
-    chron \
-    lubridate
-
-RUN apt-get install -y \
+    ssh \
     pandoc \
     pandoc-citeproc \
-    nano
+    nano \
+    libblas-dev \
+    texinfo \
+    texlive \
+    texlive-fonts-extra \
+    libmagick++-dev
+
+# Remove all regular package version
+RUN rm -rf /usr/local/lib/R/site-library/*
+RUN rm -rf /usr/lib/R/library/*
+
+RUN apt-get remove -y libdrm2
+RUN apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev libdrm-dev
+
+RUN /usr/local/bin/RDscript \
+    -e "install.packages(c('knitr'), dependencies=TRUE)"
+
+RUN /usr/local/bin/RDscript \
+    -e "install.packages(c('htmlTable', 'Gmisc', 'forestplot'), dependencies=TRUE)"
+
+RUN /usr/local/bin/RDscript \
+    -e "install.packages(c('Greg'), dependencies=TRUE)"
+
 
 COPY resources /root
 WORKDIR "/root"
+
+RUN echo "./check_pkg.sh" > .bash_history
 
 CMD ["/bin/bash"]
