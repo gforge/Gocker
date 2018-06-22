@@ -1,4 +1,4 @@
-FROM $BASE
+FROM $BASE$PYVER
 MAINTAINER Max Gordon <max@gforge.se>
 
 RUN apt-get update
