@@ -1,4 +1,4 @@
-FROM gforge/base-pytorch
+FROM gforge/base-pytorch:pytorch0.3.1
 MAINTAINER Max Gordon <max@gforge.se>
 
 RUN apt-get update

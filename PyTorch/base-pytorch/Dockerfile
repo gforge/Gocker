@@ -37,7 +37,7 @@ RUN conda config --add channels conda-forge
 RUN conda config --add channels pytorch
 
 RUN conda update -y --all
-RUN conda install pytorch torchvision cuda91 -c pytorch -y
+RUN conda install pytorch=0.3.1 torchvision cuda91 -c pytorch -y
 RUN conda install jupyter ipywidgets -y
 
 CMD ["/bin/bash"]
