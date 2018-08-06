@@ -10,7 +10,8 @@ RUN conda install -y \
    shapely \
    scikit-learn \
    scikit-image \
-   matplotlib
+   matplotlib \
+   blessings
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
