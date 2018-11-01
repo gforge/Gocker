@@ -11,7 +11,7 @@ shell_format='$BASE'
 echo "Create the base-pytorch Dockerfile"
 dest="base-pytorch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
-export BASE=nvidia/cuda:9.1-cudnn7-devel
+export BASE=nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 
 envsubst $shell_format < $template > $dest
 

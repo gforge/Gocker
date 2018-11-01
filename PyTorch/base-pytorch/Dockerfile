@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.1-cudnn7-devel
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 MAINTAINER Max Gordon <max@gforge.se>
 
 # This package only installs the pre-requisits for later installing torch
