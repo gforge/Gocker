@@ -4,13 +4,14 @@ MAINTAINER Max Gordon <max@gforge.se>
 RUN apt-get update
 RUN apt-get install -y libgl1-mesa-glx
 
-RUN conda update conda
 RUN conda install -y \
    pandas \
    opencv \
    shapely \
    scikit-learn \
-   matplotlib
+   scikit-image \
+   matplotlib \
+   blessings
 
 # Jupyter config
 RUN jupyter notebook --generate-config \

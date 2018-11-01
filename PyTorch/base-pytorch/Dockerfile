@@ -33,7 +33,11 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN conda install pytorch torchvision cuda90 -c pytorch
-RUN conda install jupyter ipywidgets
+RUN conda config --add channels conda-forge
+RUN conda config --add channels pytorch
+
+RUN conda update -y --all
+RUN conda install pytorch torchvision cuda91 -c pytorch -y
+RUN conda install jupyter ipywidgets -y
 
 CMD ["/bin/bash"]
