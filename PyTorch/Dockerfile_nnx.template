@@ -6,7 +6,6 @@ RUN apt-get install -y libgl1-mesa-glx
 
 RUN conda install -y \
    pandas \
-   opencv \
    shapely \
    scikit-learn \
    scikit-image \
@@ -14,6 +13,7 @@ RUN conda install -y \
    blessings \
    tensorboard \
    tensorboardx \
+   opencv
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
