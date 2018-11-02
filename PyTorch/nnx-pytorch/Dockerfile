@@ -12,7 +12,8 @@ RUN conda install -y \
    scikit-image \
    matplotlib \
    blessings \
-   tensorboard
+   tensorboard \
+   tensorboardx \
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
