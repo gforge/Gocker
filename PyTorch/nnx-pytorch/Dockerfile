@@ -14,6 +14,7 @@ RUN conda install -y \
    blessings \
    tensorboard \
    tensorboardx \
+   cv2
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
