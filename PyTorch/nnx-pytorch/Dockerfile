@@ -11,7 +11,8 @@ RUN conda install -y \
    scikit-learn \
    scikit-image \
    matplotlib \
-   blessings
+   blessings \
+   tensorboard
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
