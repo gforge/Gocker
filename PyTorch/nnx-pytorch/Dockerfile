@@ -10,10 +10,11 @@ RUN conda install -y \
    scikit-learn \
    scikit-image \
    matplotlib \
-   blessings \
-   tensorboard \
-   tensorboardx \
    opencv
+
+RUN conda install -y \
+   blessings \
+   tensorboardx
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
