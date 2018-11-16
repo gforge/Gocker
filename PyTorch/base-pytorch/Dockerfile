@@ -9,10 +9,6 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 # Install Python, Jupyter and build tools
 RUN apt-get update --fix-missing && apt-get install -y \
     bzip2 \
-    python3 \
-    python3-setuptools \
-    python3-dev \
-    ipython3 \
     build-essential \
     git \
     mercurial \
@@ -24,8 +20,8 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libssl-dev \
     libsm6 \
     libxext6 \
-    libxrender1
-
+    libxrender1 \
+    curl
 
 # Install miniconda to /miniconda
 RUN curl -LO http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
