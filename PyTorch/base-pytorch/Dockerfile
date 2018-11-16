@@ -43,7 +43,7 @@ RUN conda update -y --all
 ENV PATH /opt/conda/bin:$PATH
 
 # Install Pytorch
-RUN conda install pytorch torchvision -c pytorch -y
+RUN conda install pytorch torchvision -y
 
 # Install Jupyter
 RUN conda install jupyter ipywidgets -y
