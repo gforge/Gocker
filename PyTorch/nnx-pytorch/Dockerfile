@@ -8,16 +8,13 @@ RUN conda install -y \
    pandas \
    shapely \
    scikit-learn \
-   scikit-image
+   scikit-image \
+   matplotlib
 
 RUN conda install -y \
    -c conda-forge \
    blessings \
    tensorboardx
-
-RUN conda install -y  \
-   matplotlib \
-   opencv
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
