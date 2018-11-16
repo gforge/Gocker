@@ -8,13 +8,16 @@ RUN conda install -y \
    pandas \
    shapely \
    scikit-learn \
-   scikit-image \
-   matplotlib \
-   opencv
+   scikit-image
 
 RUN conda install -y \
+   -c conda-forge \
    blessings \
    tensorboardx
+
+RUN conda install -y  \
+   matplotlib \
+   opencv
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
@@ -25,7 +28,7 @@ RUN jupyter notebook --generate-config \
 EXPOSE 8888
 
 VOLUME /root
-WORKDIR /root
+WORKDIR /root/code
 
 RUN mkdir /models
 # Place to save the models using `torch.utils.model_zoo`
