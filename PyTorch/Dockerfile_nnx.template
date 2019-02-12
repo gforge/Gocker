@@ -9,12 +9,13 @@ RUN conda install -y \
    shapely \
    scikit-learn \
    scikit-image \
-   matplotlib
-
-RUN conda install -y \
+   matplotlib \
+   && conda install -y \
    -c conda-forge \
    blessings \
-   tensorboardx
+   tensorboardx \
+   && conda clean --all --yes
+
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
@@ -24,18 +25,32 @@ RUN jupyter notebook --generate-config \
 # Expose Jupyter port
 EXPOSE 8888
 
-VOLUME /root
-WORKDIR /root/code
-
 RUN mkdir /models
 # Place to save the models using `torch.utils.model_zoo`
 RUN mkdir /models/zoo
 ENV TORCH_MODEL_ZOO /models/zoo
 
 # Where to mount the data
-RUN mkdir /data
+RUN mkdir /data && \
+    mkdir /data/Imagenet && \
+    mkdir /data/xrays && \
+    mkdir /data/xrays_alt && \
+    mkdir /data/cifar10 && \
+    mkdir /data/coco && \
+    mkdir /data/log && \
+    mkdir /data/annotations
 
-COPY resources /root
+# Set permittions for our dluser directories
+RUN chown dluser -R /data && \
+    chown dluser -R ${HOME} && \
+    chown dluser -R /models/zoo
+
+# Change to user
+USER dluser
+
+WORKDIR ${HOME}/code
+
+COPY --chown=dluser resources ${HOME}
 # Change to for jupyter CMD ["/root/run_jupyter.sh"]
 
 CMD ["/bin/bash"]

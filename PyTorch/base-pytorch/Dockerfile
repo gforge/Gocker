@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 MAINTAINER Max Gordon <max@gforge.se>
 
 # This package only installs the pre-requisits for later installing torch
@@ -21,31 +21,31 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libsm6 \
     libxext6 \
     libxrender1 \
-    curl
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# We want the user with ID 1000 as this is a non-root user and frequently the parent system user
+ENV HOME /home/dluser
+RUN /usr/sbin/groupadd dluser --gid 1000
+RUN useradd -d ${HOME} -u 1000 -o -g dluser dluser
+RUN mkdir -p ${HOME}
+RUN mkdir -p ${HOME}/code
 
 # Install miniconda to /miniconda
-RUN curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
-RUN rm Miniconda3-latest-Linux-x86_64.sh
-ENV PATH=/miniconda/bin:${PATH}
+RUN mkdir -p /opt
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ${HOME}/miniconda.sh && \
+    /bin/bash ${HOME}/miniconda.sh -b -p /opt/conda && \
+    rm ${HOME}/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ${HOME}/.bashrc && \
+    echo "conda activate base" >> ${HOME}/.bashrc
 
-RUN conda config --add channels conda-forge
-RUN conda config --add channels pytorch
-RUN conda update -y conda
-RUN conda update -y --all
+ENV PATH=/opt/conda/bin:${PATH}
 
-# Old miniconda
-#RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-#  wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.27-Linux-x86_64.sh -O ~/miniconda.sh && \
-#  /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-#  rm ~/miniconda.sh
-
-ENV PATH /opt/conda/bin:$PATH
-
-# Install Pytorch
-RUN conda install pytorch torchvision -y
-
-# Install Jupyter
-RUN conda install jupyter ipywidgets -y
+RUN conda config --add channels conda-forge && \
+    conda config --add channels pytorch && \
+    conda update -y --all && \
+    conda install pytorch torchvision jupyter ipywidgets -y && \
+    conda clean --all --yes
 
 CMD ["/bin/bash"]
