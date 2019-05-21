@@ -45,7 +45,12 @@ ENV PATH=/opt/conda/bin:${PATH}
 RUN conda config --add channels conda-forge && \
     conda config --add channels pytorch && \
     conda update -y --all && \
-    conda install pytorch torchvision jupyter ipywidgets -y && \
+    conda install -y \
+        pytorch \
+        cudatoolkit=10.0 \
+        torchvision \
+        jupyter \
+        ipywidgets && \
     conda clean --all --yes
 
 CMD ["/bin/bash"]

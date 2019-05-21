@@ -6,12 +6,14 @@
 
 # Create Dockerfiles from template
 template="Dockerfile_base.template"
-shell_format='${BASE},${PYVER}'
+shell_format='${BASE},${PYVER},${CUDA_VER},${CUDNN_VER}'
 
 echo "Create the base-pytorch Dockerfile"
 dest="base-pytorch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
-export BASE=nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+export CUDA_VER=10.0
+export CUDNN_VER=7
+export BASE="nvidia/cuda:$CUDA_VER-cudnn$CUDNN_VER-devel-ubuntu18.04"
 if [ $# -eq 0 ]
 then
     export PYVER=''

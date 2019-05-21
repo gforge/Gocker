@@ -2,9 +2,9 @@
 
 A Docker file repository with all the build files that I use in my Docker containers.
 
-## The Torch setup
+## The PyTorch setup
 
-The Torch setup contains all the Docker files that I use in my Torch deep learning projects. It consists of Docker images based on Nvidia's [Docker project](https://github.com/NVIDIA/nvidia-docker).
+The PyTorch setup contains all the Docker files that I use in my deep learning projects. It consists of Docker images based on Nvidia's [Docker project](https://github.com/NVIDIA/nvidia-docker).
 
 ## The R setup
 
