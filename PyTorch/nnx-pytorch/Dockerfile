@@ -14,6 +14,7 @@ RUN conda install -y \
    -c conda-forge \
    blessings \
    tensorboardx \
+   pyyaml \
    && conda clean --all --yes
 
 
