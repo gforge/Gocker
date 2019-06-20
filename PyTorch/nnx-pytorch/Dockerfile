@@ -1,8 +1,9 @@
 FROM gforge/base-pytorch
 MAINTAINER Max Gordon <max@gforge.se>
 
-RUN apt-get update
-RUN apt-get install -y libgl1-mesa-glx
+RUN apt-get update \
+   && apt-get install -y \
+      libgl1-mesa-glx
 
 RUN conda install -y \
    pandas \
@@ -58,4 +59,3 @@ RUN echo "PS1=\"\${debian_chroot:+(\$debian_chroot)}\u@nnx:\w\$ \"" >> ~/.bashrc
 
 CMD ["/bin/bash"]
 #  python code/main.py -profile docker -datasets xray_full
-
