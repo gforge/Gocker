@@ -19,6 +19,7 @@ RUN conda install -y \
    pyyaml \
    && conda clean --all --yes
 
+RUN conda install -y -c bioconda ray
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
