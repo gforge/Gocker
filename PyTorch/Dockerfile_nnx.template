@@ -15,6 +15,7 @@ RUN conda install -y \
    -c conda-forge \
    blessings \
    tensorboard \
+   future \
    pyyaml \
    && conda clean --all --yes
 
@@ -56,6 +57,7 @@ COPY --chown=dluser resources ${HOME}
 # Change to for jupyter CMD ["/root/run_jupyter.sh"]
 
 RUN echo "PS1=\"\${debian_chroot:+(\$debian_chroot)}\u@nnx:\w\$ \"" >> ~/.bashrc
+
 
 CMD ["/bin/bash"]
 #  python code/main.py -profile docker -datasets xray_full
