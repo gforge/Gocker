@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 MAINTAINER Max Gordon <max@gforge.se>
 
 # This package only installs the pre-requisits for later installing torch
@@ -47,7 +47,7 @@ RUN conda config --add channels conda-forge && \
     conda update -y --all && \
     conda install -y \
         pytorch \
-        cudatoolkit=10.0 \
+        cudatoolkit=10.2 \
         torchvision \
         jupyter \
         ipywidgets && \
