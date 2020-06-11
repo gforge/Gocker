@@ -4,10 +4,9 @@ MAINTAINER Max Gordon <max@gforge.se>
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-
 # Install Python, Jupyter and build tools
-RUN apt-get update --fix-missing && apt-get install -y \
+RUN apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends \
     bzip2 \
     build-essential \
     git \
@@ -22,7 +21,15 @@ RUN apt-get update --fix-missing && apt-get install -y \
     libxext6 \
     libxrender1 \
     curl \
+    locales \
     && rm -rf /var/lib/apt/lists/*
+
+# ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
+RUN locale-gen en_US.UTF-8
+
 
 # We want the user with ID 1000 as this is a non-root user and frequently the parent system user
 ENV HOME /home/dluser
@@ -51,6 +58,6 @@ RUN conda config --add channels conda-forge && \
         torchvision \
         jupyter \
         ipywidgets && \
-    conda clean --all --yes
+    conda clean -afy
 
 CMD ["/bin/bash"]
