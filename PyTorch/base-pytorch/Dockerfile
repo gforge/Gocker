@@ -1,5 +1,5 @@
-FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
-MAINTAINER Max Gordon <max@gforge.se>
+FROM nvidia/cuda:11.1-cudnn8-devel-ubuntu18.04
+LABEL maintainer="Max Gordon <max@gforge.se>"
 
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
@@ -54,7 +54,7 @@ RUN conda config --add channels conda-forge && \
     conda update -y --all && \
     conda install -y \
         pytorch \
-        cudatoolkit=10.2 \
+        cudatoolkit=11.1 \
         torchvision \
         jupyter \
         ipywidgets && \

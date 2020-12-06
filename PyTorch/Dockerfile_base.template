@@ -1,5 +1,5 @@
 FROM $BASE
-MAINTAINER Max Gordon <max@gforge.se>
+LABEL maintainer="Max Gordon <max@gforge.se>"
 
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
