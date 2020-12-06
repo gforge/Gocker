@@ -17,13 +17,14 @@ RUN conda install -y \
     tensorboard \
     future \
     pyyaml \
+    opencv \
     && conda clean --all --yes
 
 RUN conda install -y -c bioconda ray
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
-    && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
+ && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
     >> ~/.jupyter/jupyter_notebook_config.py
 
 # Expose Jupyter port
