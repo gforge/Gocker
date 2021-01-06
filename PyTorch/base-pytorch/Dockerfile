@@ -22,6 +22,7 @@ RUN apt-get update --fix-missing && \
     libxrender1 \
     curl \
     locales \
+    nano \
     && rm -rf /var/lib/apt/lists/*
 
 # ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
@@ -30,13 +31,15 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
 RUN locale-gen en_US.UTF-8
 
-
 # We want the user with ID 1000 as this is a non-root user and frequently the parent system user
 ENV HOME /home/dluser
 RUN /usr/sbin/groupadd dluser --gid 1000
 RUN useradd -d ${HOME} -u 1000 -o -g dluser dluser
 RUN mkdir -p ${HOME}
 RUN mkdir -p ${HOME}/code
+
+WORKDIR ${HOME}
+COPY --chown=dluser resources ${HOME}
 
 # Install miniconda to /miniconda
 RUN mkdir -p /opt

@@ -55,7 +55,6 @@ USER dluser
 
 WORKDIR ${HOME}/code
 
-COPY --chown=dluser resources ${HOME}
 # Change to for jupyter CMD ["/root/run_jupyter.sh"]
 
 RUN echo "PS1=\"\${debian_chroot:+(\$debian_chroot)}\u@nnx:\w\$ \"" >> ~/.bashrc
