@@ -18,6 +18,7 @@ RUN conda install -y \
     future \
     pyyaml \
     opencv \
+    objgraph \
     && conda clean --all --yes
 
 RUN conda install -y -c bioconda ray
