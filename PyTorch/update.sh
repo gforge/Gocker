@@ -11,9 +11,10 @@ shell_format='${BASE},${PYVER},${CUDA_VER},${CUDNN_VER}'
 echo "Create the base-pytorch Dockerfile"
 dest="base-pytorch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
-export CUDA_VER=11.0
+export CUDA_VER=11.4.2
 export CUDNN_VER=8
-export BASE="nvidia/cuda:$CUDA_VER-cudnn$CUDNN_VER-devel-ubuntu18.04"
+export UBUNTU_VERSION=20.04
+export BASE="nvidia/cuda:$CUDA_VER-cudnn$CUDNN_VER-devel-ubuntu${UBUNTU_VERSION}"
 if [ $# -eq 0 ]
 then
     export PYVER=''

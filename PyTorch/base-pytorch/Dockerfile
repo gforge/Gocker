@@ -1,20 +1,22 @@
-FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install Python, Jupyter and build tools
+# - Already installed
+#   build-essential
+#   ca-certificates
 RUN apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends \
     bzip2 \
-    build-essential \
     git \
     mercurial \
-    subversion \
     software-properties-common \
     wget \
-    ca-certificates \
     libglib2.0-0 \
     libssl-dev \
     libsm6 \
@@ -23,6 +25,7 @@ RUN apt-get update --fix-missing && \
     curl \
     locales \
     nano \
+    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
 # ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
@@ -57,7 +60,7 @@ RUN conda config --add channels conda-forge && \
     conda update -y --all && \
     conda install -y \
         pytorch \
-        cudatoolkit=11.0 \
+        cudatoolkit=11.4.2 \
         torchvision \
         jupyter \
         ipywidgets && \

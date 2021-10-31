@@ -1,27 +1,20 @@
 FROM gforge/base-pytorch
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
-RUN apt-get update \
-    && apt-get install -y \
-    libgl1-mesa-glx
-
 RUN conda install -y \
     pandas \
     shapely \
     scikit-learn \
     scikit-image \
     matplotlib \
-    && conda install -y \
-    -c conda-forge \
     blessings \
     tensorboard \
     future \
     pyyaml \
     opencv \
     objgraph \
+    && conda install -y -c bioconda ray \
     && conda clean --all --yes
-
-RUN conda install -y -c bioconda ray
 
 # Jupyter config
 RUN jupyter notebook --generate-config \
@@ -60,6 +53,4 @@ WORKDIR ${HOME}/code
 
 RUN echo "PS1=\"\${debian_chroot:+(\$debian_chroot)}\u@nnx:\w\$ \"" >> ~/.bashrc
 
-
 CMD ["/bin/bash"]
-#  python code/main.py -profile docker -datasets xray_full
