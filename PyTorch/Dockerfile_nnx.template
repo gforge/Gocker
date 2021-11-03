@@ -1,4 +1,4 @@
-FROM $BASE$PYVER
+FROM $BASE$PYTORCH_VER
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
 RUN conda install -y \

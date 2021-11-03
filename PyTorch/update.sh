@@ -6,20 +6,21 @@
 
 # Create Dockerfiles from template
 template="Dockerfile_base.template"
-shell_format='${BASE},${PYVER},${CUDA_VER},${CUDNN_VER}'
+shell_format='${BASE},${PYTORCH_VER},${PYTORCH_CUDA_VER},${CUDNN_VER}'
 
 echo "Create the base-pytorch Dockerfile"
 dest="base-pytorch/Dockerfile"
 mkdir -p "$(dirname "$dest")"
-export CUDA_VER=11.4.2
+export DOCKER_CUDA_VER=11.4.2
+export PYTORCH_CUDA_VER=11.3
 export CUDNN_VER=8
 export UBUNTU_VERSION=20.04
-export BASE="nvidia/cuda:$CUDA_VER-cudnn$CUDNN_VER-devel-ubuntu${UBUNTU_VERSION}"
+export BASE="nvidia/cuda:$DOCKER_CUDA_VER-cudnn$CUDNN_VER-devel-ubuntu${UBUNTU_VERSION}"
 if [ $# -eq 0 ]
 then
-    export PYVER=''
+    export PYTORCH_VER=''
 else
-    export PYVER="=$1"
+    export PYTORCH_VER="=$1"
 fi
 
 envsubst $shell_format < $template > $dest
@@ -36,7 +37,7 @@ then
     # Use the docker with the specific PyTorch version
     # - note - this has to be manually built and sent
     #          to the docker hub
-    export PYVER=":pytorch$1"
+    export PYTORCH_VER=":pytorch$1"
 fi
 
 export BASE=gforge/base-pytorch

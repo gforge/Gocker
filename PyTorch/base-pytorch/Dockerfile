@@ -4,6 +4,11 @@ LABEL maintainer="Max Gordon <max@gforge.se>"
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
 
+# Avoid timezone issue
+ENV TZ=Europe/Stockholm
+RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime
+
+# Avoid stops in apt install
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Python, Jupyter and build tools
@@ -60,10 +65,13 @@ RUN conda config --add channels conda-forge && \
     conda update -y --all && \
     conda install -y \
         pytorch \
-        cudatoolkit=11.4.2 \
+        cudatoolkit=11.3 \
         torchvision \
         jupyter \
         ipywidgets && \
     conda clean -afy
+
+# Verify that CUDA is available as expected
+RUN ./check_pytorch_cuda.sh
 
 CMD ["/bin/bash"]
