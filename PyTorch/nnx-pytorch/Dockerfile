@@ -1,4 +1,6 @@
-FROM gforge/base-pytorch
+ARG BASE_IMAGE
+ARG IMAGE_TAG
+FROM ${BASE_IMAGE}:${IMAGE_TAG}
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
 RUN conda install -y \
@@ -16,33 +18,40 @@ RUN conda install -y \
     && conda install -y -c bioconda ray \
     && conda clean --all --yes
 
+# A ray reature
+ENV OMPI_MCA_opal_cuda_support true
+
 # Jupyter config
 RUN jupyter notebook --generate-config \
- && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
+    && printf "\nimport os\nfrom IPython.lib import passwd\npassword = os.environ.get('JUPYTER_PASSWORD')\nif password:\n  c.NotebookApp.password = passwd(password)\n" \
     >> ~/.jupyter/jupyter_notebook_config.py
 
 # Expose Jupyter port
 EXPOSE 8888
 
-RUN mkdir /models
+# Data directory
+ENV DATA_DIR /data
+# Home of all models
+ENV TORCH_MODELS /models
 # Place to save the models using `torch.utils.model_zoo`
-RUN mkdir /models/zoo
-ENV TORCH_MODEL_ZOO /models/zoo
+ENV TORCH_MODEL_ZOO "${TORCH_MODELS}/zoo"
 
 # Where to mount the data
-RUN mkdir /data && \
-    mkdir /data/Imagenet && \
-    mkdir /data/xrays && \
-    mkdir /data/xrays_alt && \
-    mkdir /data/cifar10 && \
-    mkdir /data/coco && \
-    mkdir /data/log && \
-    mkdir /data/annotations
+RUN mkdir ${DATA_DIR} && \
+    mkdir "${DATA_DIR}/Imagenet" && \
+    mkdir "${DATA_DIR}/xrays" && \
+    mkdir "${DATA_DIR}/xrays_alt" && \
+    mkdir "${DATA_DIR}/cifar10" && \
+    mkdir "${DATA_DIR}/coco" && \
+    mkdir "${DATA_DIR}/log" && \
+    mkdir "${DATA_DIR}/annotations" && \
+    mkdir ${TORCH_MODELS} && \
+    mkdir ${TORCH_MODEL_ZOO}
 
 # Set permittions for our dluser directories
-RUN chown dluser -R /data && \
-    chown dluser -R ${HOME} && \
-    chown dluser -R /models/zoo
+RUN chown dluser -R ${HOME} && \
+    chown dluser -R ${DATA_DIR} && \
+    chown dluser -R ${TORCH_MODELS}
 
 # Change to user
 USER dluser

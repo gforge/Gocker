@@ -1,11 +1,13 @@
-FROM nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04
+ARG BASE_IMAGE
+ARG IMAGE_TAG
+FROM ${BASE_IMAGE}:${IMAGE_TAG}
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
 # This package only installs the pre-requisits for later installing torch
 # Due to dockerhub limitations it's split into these small pieces
 
 # Avoid timezone issue
-ENV TZ=Europe/Stockholm
+ARG TZ=Europe/Stockholm
 RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime
 
 # Avoid stops in apt install
@@ -60,15 +62,17 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 
 ENV PATH=/opt/conda/bin:${PATH}
 
+ARG PYTORCH_VER
+ARG PYTORCH_CUDA_VER
 RUN conda config --add channels conda-forge && \
     conda config --add channels pytorch && \
     conda update -y --all && \
     conda install -y \
-        pytorch \
-        cudatoolkit=11.3 \
-        torchvision \
-        jupyter \
-        ipywidgets && \
+    pytorch$PYTORCH_VER \
+    cudatoolkit=$PYTORCH_CUDA_VER \
+    torchvision \
+    jupyter \
+    ipywidgets && \
     conda clean -afy
 
 # Verify that CUDA is available as expected
