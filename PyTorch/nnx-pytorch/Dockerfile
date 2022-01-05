@@ -15,6 +15,8 @@ RUN conda install -y \
     pyyaml \
     opencv \
     objgraph \
+    pydantic \
+    datatable \
     && conda install -y -c bioconda ray \
     && conda clean --all --yes
 
