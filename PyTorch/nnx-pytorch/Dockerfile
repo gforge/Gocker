@@ -5,6 +5,7 @@ LABEL maintainer="Max Gordon <max@gforge.se>"
 
 RUN conda install -y \
     pandas \
+    pyarrow \
     shapely \
     scikit-learn \
     scikit-image \

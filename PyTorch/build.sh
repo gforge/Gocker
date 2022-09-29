@@ -4,8 +4,9 @@ set -e
 
 build_depth=${1:-2}
 
+PYTHON_VER=3.10
 PYTORCH_CUDA_VER=11.6
-DOCKER_CUDA_VER=11.6.2
+DOCKER_CUDA_VER=11.7.1
 CUDNN_VER=8
 UBUNTU_VERSION=20.04
 BASE_IMAGE="nvidia/cuda"
@@ -44,6 +45,7 @@ if [ $build_depth -ge 2 ]; then
     -t $NNX_BASE_IMAGE_NAME:$IMAGE_TAG \
     --build-arg BASE_IMAGE=$BASE_IMAGE \
     --build-arg IMAGE_TAG=$IMAGE_TAG \
+    --build-arg PYTHON_VER=$PYTHON_VER \
     --build-arg PYTORCH_CUDA_VER=$PYTORCH_CUDA_VER \
     --build-arg TZ=$TZ \
     base-pytorch

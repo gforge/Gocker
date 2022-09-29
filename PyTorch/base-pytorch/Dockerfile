@@ -62,13 +62,19 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 
 ENV PATH=/opt/conda/bin:${PATH}
 
-ARG PYTORCH_VER
+# Update conda to latest version
+ARG PYTHON_VER
+RUN echo "Installing conda python ver. ${PYTHON_VER}"
+RUN conda update -n base -c defaults conda -y && \
+    conda install python=$PYTHON_VER -y && \
+    conda clean -afy
+
 ARG PYTORCH_CUDA_VER
 RUN conda config --add channels conda-forge && \
     conda config --add channels pytorch && \
     conda update -y --all && \
     conda install -y \
-    pytorch$PYTORCH_VER \
+    pytorch \
     cudatoolkit=$PYTORCH_CUDA_VER \
     torchvision \
     jupyter \
