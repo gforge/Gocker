@@ -62,10 +62,13 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 
 ENV PATH=/opt/conda/bin:${PATH}
 
+ARG PYTHON_VER
 ARG PYTORCH_VER
 ARG PYTORCH_CUDA_VER
-RUN conda config --add channels conda-forge && \
+RUN conda install python=$PYTHON_VER && \
+    conda config --add channels conda-forge && \
     conda config --add channels pytorch && \
+    conda config --add channels nvidia && \
     conda update -y --all && \
     conda install -y \
     pytorch$PYTORCH_VER \
