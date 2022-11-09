@@ -3,22 +3,24 @@ ARG IMAGE_TAG
 FROM ${BASE_IMAGE}:${IMAGE_TAG}
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
-RUN conda install -y \
+RUN conda install -y  \
     pandas \
-    shapely \
     scikit-learn \
     scikit-image \
-    matplotlib \
-    blessings \
     tensorboard \
     future \
     pyyaml \
-    opencv \
     objgraph \
     pydantic \
-    datatable \
-    && conda install -y -c bioconda ray \
-    && conda clean --all --yes
+    ray && \
+    conda clean --all --yes
+
+RUN pip install --no-cache-dir \
+    scikit-image \
+    matplotlib \
+    opencv-python \
+    blessings \
+    tensorboard
 
 # A ray reature
 ENV OMPI_MCA_opal_cuda_support true

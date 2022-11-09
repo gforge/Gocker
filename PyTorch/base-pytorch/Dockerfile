@@ -32,8 +32,9 @@ RUN apt-get update --fix-missing && \
     curl \
     locales \
     nano \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
+    libgl1-mesa-glx && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
@@ -69,10 +70,11 @@ RUN conda install python=$PYTHON_VER && \
     conda config --add channels conda-forge && \
     conda config --add channels pytorch && \
     conda config --add channels nvidia && \
+    conda config --add channels bioconda && \
     conda update -y --all && \
     conda install -y \
     pytorch$PYTORCH_VER \
-    cudatoolkit=$PYTORCH_CUDA_VER \
+    pytorch-cuda=$PYTORCH_CUDA_VER \
     torchvision \
     jupyter \
     ipywidgets && \
