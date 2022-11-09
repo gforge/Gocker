@@ -32,7 +32,8 @@ RUN apt-get update --fix-missing && \
     curl \
     locales \
     nano \
-    libgl1-mesa-glx && \
+    libgl1-mesa-glx \
+    libopencv-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

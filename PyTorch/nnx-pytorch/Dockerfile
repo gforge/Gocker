@@ -15,13 +15,6 @@ RUN conda install -y  \
     ray && \
     conda clean --all --yes
 
-RUN pip install --no-cache-dir \
-    scikit-image \
-    matplotlib \
-    opencv-python \
-    blessings \
-    tensorboard
-
 # A ray reature
 ENV OMPI_MCA_opal_cuda_support true
 
@@ -59,6 +52,13 @@ RUN chown dluser -R ${HOME} && \
 
 # Change to user
 USER dluser
+
+ENV PATH=/home/dluser/.local/bin:${PATH}
+
+RUN pip install --no-cache-dir \
+    matplotlib \
+    opencv-python \
+    blessings
 
 WORKDIR ${HOME}/code
 
