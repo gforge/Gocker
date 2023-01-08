@@ -4,13 +4,15 @@ set -e
 
 build_depth=${1:-2}
 
-PYTHON_VER=3.10
+PYTHON_VER=3.11
+PYTORCH_VER=1.13.1
 PYTORCH_CUDA_VER=11.7
-DOCKER_CUDA_VER=11.8.0
+DOCKER_CUDA_VER="${PYTORCH_CUDA_VER}.0"
 CUDNN_VER=8
 UBUNTU_VERSION=22.04
 BASE_IMAGE="nvidia/cuda"
-IMAGE_TAG="$DOCKER_CUDA_VER-cudnn$CUDNN_VER-runtime-ubuntu${UBUNTU_VERSION}"
+IMAGE_TAG="${DOCKER_CUDA_VER}-cudnn${CUDNN_VER}-runtime-ubuntu${UBUNTU_VERSION}"
+BUILD_IMAGE_TAG="${IMAGE_TAG}-PyTorch${PYTORCH_VER}"
 
 TZ=Europe/Stockholm
 
@@ -22,16 +24,19 @@ star_line() {
   printf "\e[0m\n"
 }
 
-star_line 49
-printf "\e[93m*\e[0m %-45s \e[93m*\e[0m\n" "Building at depth ${build_depth}"
-printf "\e[93m*\e[0m %-45s \e[93m*\e[0m\n" "Arguments:"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "PYTORCH_CUDA_VER=${PYTORCH_CUDA_VER}"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "DOCKER_CUDA_VER=${DOCKER_CUDA_VER}"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "CUDNN_VER=${CUDNN_VER}"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "BASE_IMAGE=${BASE_IMAGE}"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "IMAGE_TAG=${IMAGE_TAG}"
-printf "\e[93m*\e[0m - %-43s \e[93m*\e[0m\n" "TZ=${TZ}"
-star_line 49
+line_len=61
+star_line $line_len
+printf "\e[93m*\e[0m %-57s \e[93m*\e[0m\n" "Building at depth ${build_depth}"
+printf "\e[93m*\e[0m %-57s \e[93m*\e[0m\n" "Arguments:"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "PYTORCH_VER=${PYTORCH_VER}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "PYTORCH_CUDA_VER=${PYTORCH_CUDA_VER}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "DOCKER_CUDA_VER=${DOCKER_CUDA_VER}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "CUDNN_VER=${CUDNN_VER}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "BASE_IMAGE=${BASE_IMAGE}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "IMAGE_TAG=${IMAGE_TAG}"
+printf "\e[93m*\e[0m - %-55s \e[93m*\e[0m\n" "TZ=${TZ}"
+printf "\e[93m*\e[0m %-57s \e[93m*\e[0m\n" "build to ${BUILD_IMAGE_TAG}"
+star_line $line_len
 
 NNX_BASE_IMAGE_NAME=gforge/base-pytorch
 NNX_TARGET_IMAGE=gforge/nnx-pytorch
