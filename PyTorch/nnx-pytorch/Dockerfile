@@ -11,8 +11,7 @@ RUN conda install -y  \
     future \
     pyyaml \
     objgraph \
-    pydantic \
-    ray && \
+    pydantic && \
     conda clean --all --yes
 
 # A ray reature
