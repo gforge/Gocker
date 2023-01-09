@@ -1,6 +1,6 @@
 ARG BASE_IMAGE
-ARG IMAGE_TAG
-FROM ${BASE_IMAGE}:${IMAGE_TAG}
+ARG BUILD_IMAGE_TAG
+FROM ${BASE_IMAGE}:${BUILD_IMAGE_TAG}
 LABEL maintainer="Max Gordon <max@gforge.se>"
 
 RUN conda install -y  \

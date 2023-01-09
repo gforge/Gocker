@@ -65,6 +65,6 @@ if [ $build_depth -ge 1 ]; then
   sudo docker build \
     -t $NNX_TARGET_IMAGE:$BUILD_IMAGE_TAG \
     --build-arg BASE_IMAGE=$NNX_BASE_IMAGE_NAME \
-    --build-arg IMAGE_TAG=$IMAGE_TAG \
+    --build-arg BUILD_IMAGE_TAG=$BUILD_IMAGE_TAG \
     nnx-pytorch
 fi
