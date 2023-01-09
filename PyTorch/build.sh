@@ -47,7 +47,7 @@ if [ $build_depth -ge 2 ]; then
   star_line 52
 
   sudo docker build \
-    -t $NNX_BASE_IMAGE_NAME:$IMAGE_TAG \
+    -t $NNX_BASE_IMAGE_NAME:$BUILD_IMAGE_TAG \
     --build-arg BASE_IMAGE=$BASE_IMAGE \
     --build-arg IMAGE_TAG=$IMAGE_TAG \
     --build-arg PYTHON_VER=$PYTHON_VER \
@@ -63,7 +63,7 @@ if [ $build_depth -ge 1 ]; then
   star_line 52
 
   sudo docker build \
-    -t $NNX_TARGET_IMAGE:$IMAGE_TAG \
+    -t $NNX_TARGET_IMAGE:$BUILD_IMAGE_TAG \
     --build-arg BASE_IMAGE=$NNX_BASE_IMAGE_NAME \
     --build-arg IMAGE_TAG=$IMAGE_TAG \
     nnx-pytorch
